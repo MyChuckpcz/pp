@@ -1,6 +1,0 @@
-pytanie 1
-odp 1
-odp 2
-odp 3
-opd 4
-pop odp
