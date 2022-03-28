@@ -1,0 +1,29 @@
+#include <iostream>
+#include <regex>
+#include <fstream>
+#include <string>
+int main() {
+    std::regex reg("(\\w+)(\\.)?(\\w+)@[\\w+]+(\\.(\\w+))+");
+    std::string line, emailfilename;
+    std::cout << "Podaj nazwę pliku przechowującego dane: ";
+    std::cin >> emailfilename;
+    std::ifstream emailfile(emailfilename);
+    std::ofstream resultfile("adresy_e-mail.txt");
+    if (emailfile.is_open() && resultfile.is_open()) {
+        while (getline(emailfile, line)) {
+            std::sregex_iterator current(line.begin(), line.end(), reg);
+            std::sregex_iterator last;
+            while (current != last) {
+                std::smatch match = *current;
+                resultfile << match.str() << ",\n";
+                current++;
+            }
+        }
+        std::cout << "Adresy e-mail zapisano do pliku adresy_e-mail.txt" << std::endl;
+        emailfile.close();
+        resultfile.close();
+    }
+    else {
+        std::cout << "Plik nie został otwarty" << std::endl;
+    }
+    return 0; 
